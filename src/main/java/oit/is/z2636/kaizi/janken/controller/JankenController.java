@@ -14,15 +14,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/janken")
 public class JankenController {
-  @GetMapping
-  public String janken() {
-    return "janken.html";
-  }
 
-  @PostMapping("name")
+  @PostMapping
   public String Name(@RequestParam String name, ModelMap model) {
     model.addAttribute("name", name);
     return "janken.html";
   }
 
+  @GetMapping
+  public String janken(@RequestParam String hand, ModelMap model) {
+    String message = "";
+    if (hand.equals("gu")) {
+      message = "Draw";
+    } else if (hand.equals("tyoki")) {
+      message = "You lose!";
+    } else if (hand.equals("pa")) {
+      message = "You Win!";
+    }
+    model.addAttribute("hand", hand);
+    model.addAttribute("result", message);
+    return "janken.html";
+  }
 }
